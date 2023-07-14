@@ -32,6 +32,8 @@ var renameSchema = async () => {
   await fs.copyFile(oldPath, '/tmp/schema.gql', (err) => {console.log(err)})
 await fs.unlink(oldPath, (err) => {console.log(err)})
 };renameSchema()
+if (fs.existsSync('/tmp/schema.gql'))
+  console.log('The path exists.');
 
 @Module({
   imports: [
