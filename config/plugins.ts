@@ -7,6 +7,7 @@ export default () => ({
         maxLimit: 20,
         apolloServer: {
           tracing: true,
+            introspection: true
         },
       }
     }
