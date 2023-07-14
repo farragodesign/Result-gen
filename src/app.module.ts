@@ -24,12 +24,14 @@ import { JwtModule } from '@nestjs/jwt';
 import { CustomContextProvider } from './utils/custom';
 import { JudgeModule } from './judge/judge.module';
 import { SubstituteModule } from './substitute/substitute.module';
-const fs = require('fs')
+// for renaming graph  gql
+const {promisify} = require('util');
+const fs = require('fs');
+const {join} = require('path');
+const mv = promisify(fs.rename);
 
 var oldPath = join(process.cwd(), 'src/schema.gql')
-fs.rename(oldPath, '/tmp/schema.gql', function (err) {
-  if (err) throw err
-})
+await mv(oldPath, '/tmp/schema.gql');
 
 @Module({
   imports: [
