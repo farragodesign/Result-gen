@@ -25,14 +25,14 @@ import { CustomContextProvider } from './utils/custom';
 import { JudgeModule } from './judge/judge.module';
 import { SubstituteModule } from './substitute/substitute.module';
 // for renaming graph  gql
-const {promisify} = require('util');
 const fs = require('fs');
-const mv = promisify(fs.rename);
 
 var renameSchema = async () => {
   var oldPath = join(process.cwd(), 'src/schema.gql')
-  await mv(oldPath, '/tmp/schema.gql');
-}; renameSchema()
+  await fs.copyFile(oldPath, '/tmp/schema.gql')
+  await fs.remove(oldPath, '/tmp/schema.gql')
+await fs.unlink(oldPath, '/tmp/schema.gql')
+};renameSchema()
 
 @Module({
   imports: [
