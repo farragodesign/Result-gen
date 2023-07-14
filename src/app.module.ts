@@ -98,7 +98,8 @@ if (fs.existsSync('/tmp/schema.gql'))
         credentials: true,
         origin: true
       },
-      cache: 'bounded'
+      cache: 'bounded',
+      introspection:true
    
     }),
 
