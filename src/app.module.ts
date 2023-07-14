@@ -29,9 +29,8 @@ const fs = require('fs');
 
 var renameSchema = async () => {
   var oldPath = join(process.cwd(), 'src/schema.gql')
-  await fs.copyFile(oldPath, '/tmp/schema.gql')
-  await fs.remove(oldPath, '/tmp/schema.gql')
-await fs.unlink(oldPath, '/tmp/schema.gql')
+  await fs.copyFile(oldPath, '/tmp/schema.gql', (err) => {console.log(err)})
+await fs.unlink(oldPath, (err) => {console.log(err)})
 };renameSchema()
 
 @Module({
