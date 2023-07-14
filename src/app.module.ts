@@ -27,10 +27,10 @@ import { SubstituteModule } from './substitute/substitute.module';
 // for renaming graph  gql
 const fs = require('fs');
 
-var renameSchema = async () => {
+var renameSchema = () => {
   var oldPath = join(process.cwd(), 'src/schema.gql')
-  await fs.copyFile(oldPath, '/tmp/schema.gql', (err) => {console.log(err)})
-await fs.unlink(oldPath, (err) => {console.log(err)})
+  fs.copyFile(oldPath, '/tmp/schema.gql', (err) => {console.log(err)})
+ fs.unlink(oldPath, (err) => {console.log(err)})
 };renameSchema()
 if (fs.existsSync('/tmp/schema.gql'))
   console.log('The path exists.');
