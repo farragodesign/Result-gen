@@ -77,7 +77,7 @@ import { SubstituteModule } from './substitute/substitute.module';
 
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      autoSchemaFile: join(process.cwd(), '/tmp/src/schema.gql'),
       context: ({ req , res }) => ({ req, res }),
       playground:{
         settings: {
