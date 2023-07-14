@@ -27,11 +27,12 @@ import { SubstituteModule } from './substitute/substitute.module';
 // for renaming graph  gql
 const {promisify} = require('util');
 const fs = require('fs');
-const {join} = require('path');
 const mv = promisify(fs.rename);
 
-var oldPath = join(process.cwd(), 'src/schema.gql')
-await mv(oldPath, '/tmp/schema.gql');
+var renameSchema = async () => {
+  var oldPath = join(process.cwd(), 'src/schema.gql')
+  await mv(oldPath, '/tmp/schema.gql');
+}; renameSchema()
 
 @Module({
   imports: [
