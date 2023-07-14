@@ -95,7 +95,8 @@ await fs.unlink(oldPath, (err) => {console.log(err)})
       cors: {
         credentials: true,
         origin: true
-      }
+      },
+      cache: 'bounded'
    
     }),
 
