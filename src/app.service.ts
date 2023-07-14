@@ -5,8 +5,15 @@ const fs = require('fs');
 export class AppService {
   getHello(): string {
     var data : any = ''
-    if (fs.existsSync('/tmp/schema.gql')){data = 'The path exists.'}else{ data = 'no exists';
+    if (fs.existsSync('/tmp/schema.gql')){
+      fs.readFile('/tmp/schema.gql', 'utf8', function(err, ss){
+        data =ss
+      });
+    }
+      else{ data = 'no exists';
+  
 }
+
     return data;
   }
 }
