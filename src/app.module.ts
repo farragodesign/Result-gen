@@ -24,6 +24,12 @@ import { JwtModule } from '@nestjs/jwt';
 import { CustomContextProvider } from './utils/custom';
 import { JudgeModule } from './judge/judge.module';
 import { SubstituteModule } from './substitute/substitute.module';
+const fs = require('fs')
+
+var oldPath = join(process.cwd(), 'src/schema.gql')
+fs.rename(oldPath, '/tmp/schema.gql', function (err) {
+  if (err) throw err
+})
 
 @Module({
   imports: [
@@ -77,7 +83,7 @@ import { SubstituteModule } from './substitute/substitute.module';
 
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: join('/tmp/src/schema.gql'),
+      autoSchemaFile: '/tmp/schema.gql',
       context: ({ req , res }) => ({ req, res }),
       playground:{
         settings: {
