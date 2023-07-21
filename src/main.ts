@@ -10,6 +10,9 @@ async function bootstrap() {
   // adding global validation pipe
   app.useGlobalPipes(new ValidationPipe({transform :  true}))
 
+  // cors setup
+  app.enableCors();
+
   // adding configuration
   const configService : ConfigService = app.get(ConfigService)
 
