@@ -11,7 +11,11 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({transform :  true}))
 
   // cors setup
-  app.enableCors();
+  app.enableCors({
+    allowedHeaders: ['content-type'],
+  origin: 'http://localhost:3000',
+  credentials: true,
+  });
 
   // adding configuration
   const configService : ConfigService = app.get(ConfigService)
