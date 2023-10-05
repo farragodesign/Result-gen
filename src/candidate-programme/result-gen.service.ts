@@ -29,7 +29,7 @@ export class ResultGenService {
     private readonly DetailService: DetailsService,
     private readonly teamService: TeamsService,
     private readonly candidateService: CandidatesService,
-  ) {}
+  ) { }
 
   private firebaseConfig = {
     apiKey: process.env.FIREBASE_API_KEY,
@@ -72,6 +72,14 @@ export class ResultGenService {
     // verify the result
     await this.verifyResult(input.inputs, programCode);
 
+
+    for (let index = 0; index < programme.candidateProgramme.length; index++) {
+      const candidate = candidatesOfProgramme[index];
+
+      candidate.mark = input.inputs[index].mark
+    }
+
+
     // process the result
     candidatesOfProgramme = await this.processResult(programme);
     try {
@@ -97,6 +105,8 @@ export class ResultGenService {
     if (programme.model === Model.Arts) {
       for (let index = 0; index < candidatesOfProgramme.length; index++) {
         const candidate = candidatesOfProgramme[index];
+        console.log(candidate);
+
         const grade: Grade = await this.generateGrade(candidate.mark, programme);
         candidate.grade = grade;
       }
@@ -142,16 +152,17 @@ export class ResultGenService {
 
     const isSameLength = candidatesOfProgramme.length === input.length;
 
+
     // sorting data
 
     let sortedCandidateProgramme = candidatesOfProgramme.sort(
       (a: CandidateProgramme, b: CandidateProgramme) => {
 
         // here each chest no have 4 letters , fist one is letter and other 3 are numbers , so we are taking the last 3 numbers
-        
+
         const chestNoA = parseInt(a.candidate?.chestNO.slice(1, 4));
         const chestNoB = parseInt(b.candidate?.chestNO.slice(1, 4));
-        
+
         return chestNoA - chestNoB;
       },
     );
@@ -497,7 +508,7 @@ export class ResultGenService {
 
       // set the point to candidate
 
-      this.candidateService.addPoint(candidateProgramme.candidate.id, ICpoint, GCpoint , candidateProgramme.programme.model);
+      this.candidateService.addPoint(candidateProgramme.candidate.id, ICpoint, GCpoint, candidateProgramme.programme.model);
     }
 
     // set the result published to true
