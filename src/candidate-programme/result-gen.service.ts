@@ -105,7 +105,6 @@ export class ResultGenService {
     if (programme.model === Model.Arts) {
       for (let index = 0; index < candidatesOfProgramme.length; index++) {
         const candidate = candidatesOfProgramme[index];
-        console.log(candidate);
 
         const grade: Grade = await this.generateGrade(candidate.mark, programme);
         candidate.grade = grade;
