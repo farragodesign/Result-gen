@@ -276,17 +276,21 @@ export class ResultGenService {
   }
 
   async generatePoint(CandidateProgramme: CandidateProgramme) {
+    console.log(CandidateProgramme);
+    
     // giving the point of grade
     const grade: Grade = CandidateProgramme.grade;
+
     CandidateProgramme.point = 0;
 
     if (grade) {
+      const grageWithPoint = await this.gradeService.findOne(grade.id , ['id' , 'name' , 'pointSingle' , 'pointGroup' , 'pointHouse'])
       if (CandidateProgramme.programme.type == Type.SINGLE) {
-        CandidateProgramme.point = grade.pointSingle;
+        CandidateProgramme.point = grageWithPoint.pointSingle;
       } else if (CandidateProgramme.programme.type == Type.GROUP) {
-        CandidateProgramme.point = grade.pointGroup;
+        CandidateProgramme.point = grageWithPoint.pointGroup;
       } else if (CandidateProgramme.programme.type == Type.HOUSE) {
-        CandidateProgramme.point = grade.pointHouse;
+        CandidateProgramme.point = grageWithPoint.pointHouse;
       }
     }
 
