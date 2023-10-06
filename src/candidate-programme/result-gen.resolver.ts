@@ -1,4 +1,4 @@
-import { Resolver, Mutation, Args, Int } from '@nestjs/graphql';
+ import { Resolver, Mutation, Args, Int } from '@nestjs/graphql';
 import { CandidateProgrammeService } from './candidate-programme.service';
 import { CandidateProgramme } from './entities/candidate-programme.entity';
 import { AddResult } from './dto/add-result.dto';
@@ -47,7 +47,7 @@ export class ResultGenResolver {
     return this.resultGenService.liveResult(programmeCode, timeInSec);
   }
 
-  @Mutation(()=> String)
+  @Mutation(()=> [Programme])
   @HasRoles(Roles.Controller)
   @UseGuards(RolesGuard)
   async publishResults(

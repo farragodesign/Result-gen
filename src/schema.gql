@@ -411,7 +411,7 @@ type Mutation {
   addNormalResult(programmeCode: String!, addResult: arrayInput!): [CandidateProgramme!]!
   approveJudgeResult(programmeCode: String!, judgeName: String!): [CandidateProgramme!]!
   liveResult(programmeCode: [String!]!, timeInSec: Float!): Int!
-  publishResults(programmeCode: [String!]!): String!
+  publishResults(programmeCode: [String!]!): [Programme!]!
   publishResult(programmeCode: String!): Programme!
   createProgramme(createProgrammeInput: CreateProgrammeInput!): Programme!
   createManyProgrammes(createProgrammeInput: createInput!): [Programme!]!

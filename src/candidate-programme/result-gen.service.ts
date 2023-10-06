@@ -214,6 +214,7 @@ export class ResultGenService {
         return grade;
       }
     }
+    return null
   }
 
   // generate position
@@ -522,12 +523,14 @@ export class ResultGenService {
   }
 
   async publishResults(programCode: [string]) {
+    let data = []
     for (let index = 0; index < programCode.length; index++) {
       const program = programCode[index];
-      await this.publishResult(program);
+    let programme = await this.publishResult(program);
+    data.push(programme)
     }
 
-    return 'success';
+    return data;
   }
 
   // live result using firebase
