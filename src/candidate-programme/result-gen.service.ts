@@ -511,7 +511,7 @@ export class ResultGenService {
 
       // set the point to candidate
 
-      this.candidateService.addPoint(candidateProgramme.candidate.id, ICpoint, GCpoint, candidateProgramme.programme.model);
+      this.candidateService.addPoint(candidateProgramme.candidate.id, ICpoint, GCpoint , candidateProgramme.programme.model);
     }
 
     // set the result published to true
