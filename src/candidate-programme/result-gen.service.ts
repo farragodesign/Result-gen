@@ -29,7 +29,7 @@ export class ResultGenService {
     private readonly DetailService: DetailsService,
     private readonly teamService: TeamsService,
     private readonly candidateService: CandidatesService,
-  ) {}
+  ) { }
 
   private firebaseConfig = {
     apiKey: process.env.FIREBASE_API_KEY,
@@ -72,6 +72,14 @@ export class ResultGenService {
     // verify the result
     await this.verifyResult(input.inputs, programCode);
 
+
+    for (let index = 0; index < programme.candidateProgramme.length; index++) {
+      const candidate = candidatesOfProgramme[index];
+
+      candidate.mark = input.inputs[index].mark
+    }
+
+
     // process the result
     candidatesOfProgramme = await this.processResult(programme);
     try {
@@ -97,6 +105,7 @@ export class ResultGenService {
     if (programme.model === Model.Arts) {
       for (let index = 0; index < candidatesOfProgramme.length; index++) {
         const candidate = candidatesOfProgramme[index];
+
         const grade: Grade = await this.generateGrade(candidate.mark, programme);
         candidate.grade = grade;
       }
@@ -142,16 +151,17 @@ export class ResultGenService {
 
     const isSameLength = candidatesOfProgramme.length === input.length;
 
+
     // sorting data
 
     let sortedCandidateProgramme = candidatesOfProgramme.sort(
       (a: CandidateProgramme, b: CandidateProgramme) => {
 
         // here each chest no have 4 letters , fist one is letter and other 3 are numbers , so we are taking the last 3 numbers
-        
+
         const chestNoA = parseInt(a.candidate?.chestNO.slice(1, 4));
         const chestNoB = parseInt(b.candidate?.chestNO.slice(1, 4));
-        
+
         return chestNoA - chestNoB;
       },
     );
@@ -204,6 +214,7 @@ export class ResultGenService {
         return grade;
       }
     }
+    return null
   }
 
   // generate position
@@ -266,17 +277,21 @@ export class ResultGenService {
   }
 
   async generatePoint(CandidateProgramme: CandidateProgramme) {
+    console.log(CandidateProgramme);
+    
     // giving the point of grade
     const grade: Grade = CandidateProgramme.grade;
+
     CandidateProgramme.point = 0;
 
     if (grade) {
+      const grageWithPoint = await this.gradeService.findOne(grade.id , ['id' , 'name' , 'pointSingle' , 'pointGroup' , 'pointHouse'])
       if (CandidateProgramme.programme.type == Type.SINGLE) {
-        CandidateProgramme.point = grade.pointSingle;
+        CandidateProgramme.point = grageWithPoint.pointSingle;
       } else if (CandidateProgramme.programme.type == Type.GROUP) {
-        CandidateProgramme.point = grade.pointGroup;
+        CandidateProgramme.point = grageWithPoint.pointGroup;
       } else if (CandidateProgramme.programme.type == Type.HOUSE) {
-        CandidateProgramme.point = grade.pointHouse;
+        CandidateProgramme.point = grageWithPoint.pointHouse;
       }
     }
 
@@ -508,12 +523,14 @@ export class ResultGenService {
   }
 
   async publishResults(programCode: [string]) {
+    let data = []
     for (let index = 0; index < programCode.length; index++) {
       const program = programCode[index];
-      await this.publishResult(program);
+    let programme = await this.publishResult(program);
+    data.push(programme)
     }
 
-    return 'success';
+    return data;
   }
 
   // live result using firebase
